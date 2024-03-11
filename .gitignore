@@ -35,3 +35,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 build_windows.zip
+.idea
+/Assets/Plugins/Editor/JetBrains
+/Assets/Plugins/Editor/JetBrains.meta

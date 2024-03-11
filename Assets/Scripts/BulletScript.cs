@@ -13,7 +13,10 @@ public class BulletScript : FlyingShotScript
 	void OnEnable ()
     {
         distance = 0.0f;
-        Pool.Instance.ActivateObject("rifleSoundEffect").SetActive(true);
+        //before active the activateObject, check the null reference situation   
+        GameObject activateObject = Pool.Instance.ActivateObject("rifleSoundEffect");
+        if(activateObject != null)
+			activateObject.SetActive(true);
     }
 	
 	// Update is called once per frame

@@ -24,7 +24,9 @@ public class CoinScript : MonoBehaviour
     {
         GameManager.Instance.CoinCollected(gameObject);
         Pool.Instance.DeactivateObject(gameObject);
-
-        Pool.Instance.ActivateObject("coinSoundEffect").SetActive(true);
+        //null reference check 
+        GameObject coinSoundEffect = Pool.Instance.ActivateObject("coinSoundEffect");
+        if (coinSoundEffect != null)
+	        coinSoundEffect.SetActive(true);
     }
 }

@@ -23,8 +23,18 @@ public class PathFollower : MonoBehaviour
     {
         switch(Type)
         {
-            case PathType.Ground: path = GameObject.Find("GroundPath").GetComponent<PathCreator>().path; break;
-            case PathType.Air: path = GameObject.Find("AirPath").GetComponent<PathCreator>().path; break;
+            //the GroundPath and AirPath might be not found ,and cause a null reference exception 
+            //so ,before use it ,check the null reference situation first 
+            case PathType.Ground:
+                GameObject groundPath = GameObject.Find("GroundPath");
+                if(groundPath != null)
+                    path = groundPath.GetComponent<PathCreator>().path;
+                break;
+            case PathType.Air:
+                GameObject airPath = GameObject.Find("AirPath");
+                if(airPath != null)
+                    path = airPath.GetComponent<PathCreator>().path;
+                break;
         }
 
         segmentIndex = 0;
@@ -58,17 +68,21 @@ public class PathFollower : MonoBehaviour
 
     private void RecomputeSegment()
     {
-        var segment = path.GetPointsInSegment(segmentIndex);
+        //the path might be null reference ,so ensure it is not,and go to calculations  
+        if (path != null)
+        {
+            var segment = path.GetPointsInSegment(segmentIndex);
 
-        A = segment[0] + PositionOffset;
-        B = segment[1] + PositionOffset;
-        C = segment[2] + PositionOffset;
-        D = segment[3] + PositionOffset;
+            A = segment[0] + PositionOffset;
+            B = segment[1] + PositionOffset;
+            C = segment[2] + PositionOffset;
+            D = segment[3] + PositionOffset;
 
-        v1 = -3 * A + 9 * B - 9 * C + 3 * D;
-        v2 = 6 * A - 12 * B + 6 * C;
-        v3 = -3 * A + 3 * B;
+            v1 = -3 * A + 9 * B - 9 * C + 3 * D;
+            v2 = 6 * A - 12 * B + 6 * C;
+            v3 = -3 * A + 3 * B;
 
-        t = 0;
+            t = 0;
+        }
     }
 }

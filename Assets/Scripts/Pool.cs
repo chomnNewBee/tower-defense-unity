@@ -59,8 +59,11 @@ public class Pool : MonoBehaviour
 
 	public GameObject ActivateObject(string tag)
     {
+        //when run the game ,there are so many exceptions,so ,I remove the KeyNotFoundException
+        //and return null instead to avoid exception 
+        //and i will handle the null situation at the caller outside this method
         if (!pooledObjects.ContainsKey(tag))
-            throw new KeyNotFoundException();
+            return null;
 
         var singlePool = pool[tag];
 

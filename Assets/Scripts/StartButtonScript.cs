@@ -10,12 +10,16 @@ public class StartButtonScript : MonoBehaviour
 
     private void Start()
     {
-        LoadingScreen.SetActive(false);
+        //the lodingScreen is unsigned ,add null reference check here 
+        if(LoadingScreen != null)
+            LoadingScreen.SetActive(false);
     }
 
     public void StartGame()
     {
-        LoadingScreen.SetActive(true);
+        //the lodingScreen is unsigned ,add null reference check here 
+        if(LoadingScreen != null)
+            LoadingScreen.SetActive(true);
         GameManager.Lives = GameManager.MaxLives;
         SceneManager.LoadScene("Level_01");
     }

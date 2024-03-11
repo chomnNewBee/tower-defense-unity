@@ -21,10 +21,16 @@ public class CannonScript : MonoBehaviour
 	{
 	    enemyTags = Enemies.Select(e => e.tag).ToList();
         var enemy = EnemyManagerScript.Instance.GetEnemyInRange(transform.position, float.PositiveInfinity, enemyTags);
+        //the enemy might be null,if it is null ,return here
+        if(enemy == null)
+            return;
         var angle = MathHelpers.Angle(enemy.transform.position - transform.position, transform.up);
         transform.eulerAngles = new Vector3(0, 0, angle);
 
-	    bulletPlaceholder = transform.Find("Rocket").gameObject;
+        //Rocket might be not found ,null reference check 
+        Transform rocket = transform.Find("Rocket");
+        if(rocket != null)
+            bulletPlaceholder = rocket.gameObject;
 	}
 
     void FixedUpdate ()

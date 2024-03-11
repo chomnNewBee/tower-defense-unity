@@ -18,8 +18,10 @@ public class RocketScript : FlyingShotScript
 	// Use this for initialization
 	void OnEnable ()
     {
-        Pool.Instance.ActivateObject("missileSoundEffect").SetActive(true);
-
+        //ensure missileSoundEffect is not null reference 
+        GameObject missileSoundEffect = Pool.Instance.ActivateObject("missileSoundEffect");
+        if(missileSoundEffect != null)
+            missileSoundEffect.SetActive(true);
         shadow = transform.Find("Shadow");
         shadow.position = transform.position;
         acceleration = InitialAcceleration;
@@ -42,8 +44,9 @@ public class RocketScript : FlyingShotScript
         {
             Target = EnemyManagerScript.Instance.GetClosestEnemyInRange(transform.position, float.PositiveInfinity, EnemyTags);
             if (Target == null) BlowUp();
+            //if the Target is null ,the direction which calculated by target will also be null,so return here
+            return;
         }
-
         var direction = Target.transform.position - transform.position;
         var angle = MathHelpers.Angle(direction, transform.up) * Time.deltaTime * Inertia * Mathf.Pow(velocity.sqrMagnitude, 0.5f);
 

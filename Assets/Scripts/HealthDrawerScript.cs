@@ -11,14 +11,17 @@ public class HealthDrawerScript : MonoBehaviour
 
     public void Draw(int lives)
     {
+        //there is a index out of range exception ,so check it here 
         for(int i = 0; i < lives; i++)
         {
-            Hearts[i].sprite = FullHeart;
+            if(Hearts != null && Hearts.Length > i)
+                Hearts[i].sprite = FullHeart;
         }
 
         for(int i = lives; i < Hearts.Length; i++)
         {
-            Hearts[i].sprite = EmptyHeart;
+            if(Hearts != null && Hearts.Length > i)
+                Hearts[i].sprite = EmptyHeart;
         }
     }
 
